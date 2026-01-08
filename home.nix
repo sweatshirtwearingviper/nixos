@@ -17,6 +17,7 @@ in
       nrs = "sudo nixos-rebuild switch";
       nec = "sudo vim /etc/nixos/configuration.nix";
       neh = "sudo vim /etc/nixos/home.nix";
+      ncg = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
     };
   };
 
