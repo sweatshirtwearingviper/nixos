@@ -32,6 +32,10 @@ in
   # Btop settings
   programs.btop = {
     enable = true;
+    settings = {
+      color_theme = "Catppuccin-Mocha";
+      clock_format = "%I:%M:%S %p";
+    };
     themes =
       {
         Catppuccin-Mocha = ''
