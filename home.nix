@@ -28,6 +28,30 @@ in
     enable = true;
     colorScheme = "dark";
   };
+  
+  # Btop settings
+  programs.btop = {
+    enable = true;
+    #programs.btop.themes =
+  };
+
+  # Fuzzel settings
+  programs.fuzzel = {
+    enable = true;
+    settings.colors = {
+      background="1e1e2eff";
+      text="cdd6f4ff";
+      prompt="bac2deff";
+      placeholder="7f849cff";
+      input="cdd6f4ff";
+      match="89b4faff";
+      selection="585b70ff";
+      selection-text="cdd6f4ff";
+      selection-match="89b4faff";
+      counter="7f849cff";
+      border="89b4faff";
+    };
+  };
 
   # Kitty settings
   programs.kitty = {
