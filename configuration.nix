@@ -104,6 +104,7 @@ in
   environment.systemPackages = with pkgs; [
     vim
     wget
+    tlp
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -119,6 +120,9 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
+
+  #Enable TLP powersaving.
+  
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
