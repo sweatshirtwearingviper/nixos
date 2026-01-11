@@ -29,8 +29,13 @@ in
     colorScheme = "dark";
   };
 
+  # Kitty settings
+  programs.kitty = {
+    enable = true;
+    themeFile = "Catppuccin-Mocha";
+  };
+
   # Hyprland settings
-  programs.kitty.enable = true;
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
 
