@@ -10,6 +10,7 @@ in
 
   programs.home-manager.enable = true;
 
+ # Bash aliases
   programs.bash = {
     enable = true;
     shellAliases = {
@@ -17,8 +18,15 @@ in
       nrs = "sudo nixos-rebuild switch";
       nec = "sudo vim /etc/nixos/configuration.nix";
       neh = "sudo vim /etc/nixos/home.nix";
-      ncg = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
+      nix-current = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
+      nix-git = "sudo git -C /etc/nixos";
     };
+  };
+
+  # GTK settings
+  gtk = {
+    enable = true;
+    colorScheme = "dark";
   };
 
   # Hyprland settings
@@ -83,7 +91,7 @@ in
       ];
   };
   
-
+  # User packages
   home.packages = with pkgs; [
     # Terminal programs
     btop
