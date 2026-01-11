@@ -93,9 +93,20 @@ in
 
   # This should be enabled here, to make certain system-level changes, such as a adding a desktop session entry
   programs.hyprland.enable = true;
+
+  # Steam is a system-wide package only due to the amount of tweaks it does
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
   
   # Allow unfree packages if necessary.
   # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "steam"
+    "steam-unwrapped"
+    ];
 
   # Needed for home-manager to set configurations correctly
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
@@ -120,7 +131,7 @@ in
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 
-  #Enable TLP powersaving.
+  # Enable TLP powersaving.
   services.tlp = {
     enable = true;
     settings = {
@@ -141,6 +152,8 @@ in
 
     };
   };
+
+  # Enable steam system-wide
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
