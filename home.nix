@@ -153,10 +153,20 @@ in
     themeFile = "Catppuccin-Mocha";
   };
 
+  # Start swww
+  services.swww.enable = true;
+
   # Hyprland settings
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
+    
+    ### INITIALIZATION ###
 
+    exec-once = [ 
+      "sleep 1; swww img ~/Pictures/skyspace.png"
+      "ssh-add ~/.ssh/envy_github"
+    ];
+ 
     ### LOOK AND FEEL ###
     general = {
       gaps_in = 0;
@@ -214,6 +224,7 @@ in
       ];
   };
   
+
   # User packages
   home.packages = with pkgs; [
     # Terminal programs
@@ -240,6 +251,7 @@ in
     # Standalone applications
     godot
     zed-editor-fhs
+    krita
 
     # Electron app
   ];
