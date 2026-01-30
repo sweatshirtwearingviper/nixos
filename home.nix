@@ -18,6 +18,8 @@ in
       nrs = "sudo nixos-rebuild switch";
       nec = "sudo vim /etc/nixos/configuration.nix";
       neh = "sudo vim /etc/nixos/home.nix";
+      ninc = "sudo nix-instantiate --parse /etc/nixos/configuration.nix";
+      ninh = "sudo nix-instantiate --parse /etc/nixos/home.nix";
       nix-current = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/ | tail -1";
       nix-git = "sudo git -C /etc/nixos";
     };
@@ -177,6 +179,11 @@ in
       layout = "dwindle";
     };
 
+    animation = 
+      [
+         "windows, 1, 1, default, slide"
+      ];
+
     dwindle = {
       pseudotile = true;
       preserve_split = true;
@@ -197,6 +204,7 @@ in
         "$mod, C, killactive"
         "$mod, F, fullscreen"
         "$mod, V, togglefloating,"
+        "$mod, S, exec, hyprshot -m region"
       ]
 
     # Some insane Nix programming that iterates over workspace binds
@@ -232,6 +240,8 @@ in
     acpi
     fastfetch
     git
+    zip
+    unzip
 
     # Wayland accesories
     fuzzel
@@ -243,15 +253,18 @@ in
     # QT applications
     kdePackages.dolphin
     kdePackages.qt6ct
+    vlc
 
     # GTK applications
     firefox
     remmina
+    audacity
 
     # Standalone applications
     godot
     zed-editor-fhs
     krita
+    aseprite
 
     # Electron app
   ];

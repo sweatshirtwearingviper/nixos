@@ -106,6 +106,7 @@ in
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "steam"
     "steam-unwrapped"
+    "aseprite"
     ];
 
   # Needed for home-manager to set configurations correctly
