@@ -25,10 +25,38 @@ in
     };
   };
 
+  # QT settings
+  qt = {
+    enable = true;
+    qt6ctSettings = {
+        Appearance = {
+        style = "kvantum";
+        icon_theme = "Papirus-Dark";
+        standar_dialogs = "xdgdesktopportal";
+      };
+        Fonts = {
+        fixed = "\"DejaVuSansM Nerd Font Mono,12\"";
+        general = "\"DejaVu Sans,12\"";
+      };
+    };    
+  };
+
   # GTK settings
   gtk = {
     enable = true;
     colorScheme = "dark";
+    cursorTheme = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+    };
+    gtk3.extraConfig = {
+      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
+    };
+    gtk4.extraConfig = {
+      Settings = ''
+      gtk-cursor-theme-name=Bibata-Modern-Classic
+      '';
+    };
   };
   
   # Btop settings
@@ -232,6 +260,21 @@ in
       ];
   };
   
+  # Environment Variables
+  home.sessionVariables = {
+    HYPRSHOT_DIR = homeDirectory + "/Pictures/screenshots";
+    QT_QPA_PLATFORM = "wayland";
+    QT_QPA_PLATFORMTHEME = "qt6ct";
+  };
+
+  # Cursor
+  home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
 
   # User packages
   home.packages = with pkgs; [
@@ -242,6 +285,22 @@ in
     git
     zip
     unzip
+    ffmpeg
+    python3
+
+    # Godot build requirements
+    scons
+    pkgconf
+    gcc
+    libxcursor
+    libxinerama
+    libxi
+    libxrandr
+    wayland-utils
+    mesa
+    libGL
+    alsa-lib
+    pulseaudio
 
     # Wayland accesories
     fuzzel
@@ -261,10 +320,11 @@ in
     audacity
 
     # Standalone applications
-    godot
+    godotPackages_4_6.godot
     zed-editor-fhs
     krita
     aseprite
+    obs-studio
 
     # Electron app
   ];
