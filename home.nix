@@ -313,6 +313,7 @@ in
     kdePackages.dolphin
     kdePackages.qt6ct
     vlc
+    prismlauncher
 
     # GTK applications
     firefox
@@ -325,6 +326,7 @@ in
     krita
     aseprite
     obs-studio
+    itch
 
     # Electron app
   ];

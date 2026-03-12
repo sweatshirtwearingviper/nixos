@@ -107,7 +107,12 @@ in
     "steam"
     "steam-unwrapped"
     "aseprite"
+    "ventoy"
     ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "ventoy-1.1.07"
+  ]; 
 
   # Needed for home-manager to set configurations correctly
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
