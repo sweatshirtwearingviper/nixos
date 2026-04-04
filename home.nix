@@ -23,6 +23,7 @@ in
       nix-current = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/ | tail -1";
       nix-git = "sudo git -C /etc/nixos";
     };
+    bashrcExtra = "ssh-add ~/.ssh/envy_github";
   };
 
   # QT settings
@@ -194,7 +195,6 @@ in
 
     exec-once = [ 
       "sleep 1; swww img ~/Pictures/skyspace.png"
-      "ssh-add ~/.ssh/envy_github"
     ];
  
     ### LOOK AND FEEL ###
@@ -207,10 +207,33 @@ in
       layout = "dwindle";
     };
 
-    animation = 
-      [
-         "windows, 1, 1, default, slide"
-      ];
+    bezier = [
+      "default, 0.05, 0.9, 0.1, 1.05"
+      "wind, 0.05, 0.9, 0.1, 1.05"
+      "overshot, 0.13, 0.99, 0.29, 1.08"
+      "liner, 1, 1, 1, 1"
+      "bounce, 0.4, 0.9, 0.6, 1.0"
+      "snappyReturn, 0.4, 0.9, 0.6, 1.0"
+      "slideInFromRight, 0.5, 0.0, 0.5, 1.0"
+    ];
+
+    animation = [
+      "windows, 1, 3, snappyReturn, slidevert"
+      "windowsIn, 1, 3, snappyReturn, slidevert right"
+      "windowsOut, 1, 3, snappyReturn, slide"
+      "windowsMove, 1, 3, bounce, slide"
+      "fadeIn, 1, 5, default"
+      "fadeOut, 1, 10, default"
+      "fadeSwitch, 1, 10, default"
+      "fadeShadow, 1, 10, default"
+      "fadeDim, 1, 10, default"
+      "workspaces, 1, 2, bounce, slidevert"
+      "border, 1, 1, liner"
+    ];
+
+    layerrule = [
+      "noanim, launcher"
+    ];
 
     dwindle = {
       pseudotile = true;
@@ -258,6 +281,7 @@ in
         ",XF86AudioLowerVolume, exec, wpctl set_volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
+
   };
   
   # Environment Variables
