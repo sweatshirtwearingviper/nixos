@@ -23,7 +23,6 @@ in
       nix-current = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/ | tail -1";
       nix-git = "sudo git -C /etc/nixos";
     };
-    bashrcExtra = "ssh-add ~/.ssh/envy_github";
   };
 
   # QT settings
@@ -185,16 +184,19 @@ in
   };
 
   # Start swww
-  services.swww.enable = true;
+  services.awww.enable = true;
 
   # Hyprland settings
   wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland.configType = "hyprlang";
   wayland.windowManager.hyprland.settings = {
     
     ### INITIALIZATION ###
 
     exec-once = [ 
-      "sleep 1; swww img ~/Pictures/skyspace.png"
+      "sleep 1; awww img /etc/nixos/wallpaper.png"
+      "ssh-add /home/sweaty/.ssh/envy_github"
+      "ssh-add /home/sweaty/.ssh/envy_gitlab"
     ];
  
     ### LOOK AND FEEL ###
@@ -232,11 +234,9 @@ in
     ];
 
     layerrule = [
-      "noanim, launcher"
     ];
 
     dwindle = {
-      pseudotile = true;
       preserve_split = true;
     };
 
@@ -277,8 +277,8 @@ in
     # Function key binds for laptop
     bindel = 
       [
-        ",XF86AudioRaiseVolume, exec, wpctl set_volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, wpctl set_volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
 
@@ -302,6 +302,9 @@ in
 
   # User packages
   home.packages = with pkgs; [
+    # Fonts
+    atkinson-hyperlegible-next
+
     # Terminal programs
     btop
     acpi
@@ -311,6 +314,8 @@ in
     unzip
     ffmpeg
     python3
+    zola
+    gource
 
     # Godot build requirements
     scons
@@ -330,27 +335,40 @@ in
     fuzzel
     dunst
     libnotify
-    swww
     hyprshot
+    awww
+    hyprshutdown
 
     # QT applications
     kdePackages.dolphin
     kdePackages.qt6ct
     vlc
     prismlauncher
+    rimsort
+    qbittorrent
+    dolphin-emu
 
     # GTK applications
     firefox
     remmina
     audacity
+    inkscape
+    vlc
+    foliate
+    transmission_4-qt6
 
     # Standalone applications
-    godotPackages_4_6.godot
+    godotPackages_4_7.godot
     zed-editor-fhs
     krita
     aseprite
     obs-studio
     itch
+    blender
+    renpy
+
+    # Cardmaker Requirements
+    mono
 
     # Electron app
   ];

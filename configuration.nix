@@ -6,7 +6,7 @@
 
 # Home manager for theming and config, npins for catpuccin themes
 let
-  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz;
+  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz;
 in
 {
   imports =
@@ -30,7 +30,7 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  
   networking.hostName = "nixos-envy"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
@@ -100,6 +100,9 @@ in
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
+
+  # Steam wayland compositor
+  programs.gamescope.enable = true;
   
   # Allow unfree packages if necessary.
   # nixpkgs.config.allowUnfree = true;
@@ -107,12 +110,9 @@ in
     "steam"
     "steam-unwrapped"
     "aseprite"
-    "ventoy"
+    "rimsort"
+    "steamworkspy"
     ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "ventoy-1.1.07"
-  ]; 
 
   # Needed for home-manager to set configurations correctly
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
@@ -132,7 +132,22 @@ in
   #   enableSSHSupport = true;
   # };
 
+  hardware.bluetooth = {
+    enable = true; # enables support for Bluetooth
+    powerOnBoot = true; # powers up the default Bluetooth controller on boot
+    settings = {
+      General = {
+        Privacy = "device";
+        JustWorksRepairing = "always";
+        Class = "0x000100";
+        FastConnectable = "true";
+      };
+    };
+  };
+
   # List services that you want to enable:
+  services.blueman.enable = true;
+  services.flatpak.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
