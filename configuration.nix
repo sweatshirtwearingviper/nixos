@@ -92,7 +92,11 @@ in
   hardware.graphics.enable = true;
 
   # This should be enabled here, to make certain system-level changes, such as a adding a desktop session entry
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
 
   # Steam is a system-wide package only due to the amount of tweaks it does
   programs.steam = {

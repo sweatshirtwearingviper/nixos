@@ -58,7 +58,7 @@ in
       '';
     };
   };
-  
+ 
   # Btop settings
   programs.btop = {
     enable = true;
@@ -155,6 +155,21 @@ in
         '';
       };
   };
+  
+  # Yazi settings
+  programs.yazi = {
+    enable = true;
+    settings = {
+      opener = {
+        image = [
+          { run = ''qimgv "$@"''; orphan = true; desc = "qimgv"; for = "unix"; }
+      ];
+    };
+    open.rules = [
+      { mime = "image/*"; use = "image"; }
+    ];
+  };
+  };
 
   # Fuzzel settings
   programs.fuzzel = {
@@ -182,9 +197,7 @@ in
     enable = true;
     themeFile = "Catppuccin-Mocha";
   };
-
-  # Start swww
-  services.awww.enable = true;
+  
 
   # Hyprland settings
   wayland.windowManager.hyprland.enable = true;
@@ -193,11 +206,14 @@ in
     
     ### INITIALIZATION ###
 
-    exec-once = [ 
-      "sleep 1; awww img /etc/nixos/wallpaper.png"
+    exec-once = [
+      "sleep 1; hyprctl hyprpaper wallpaper ,/etc/nixos/wallpaper.png" 
       "ssh-add /home/sweaty/.ssh/envy_github"
       "ssh-add /home/sweaty/.ssh/envy_gitlab"
     ];
+
+    monitor = [",preferred,auto,1"];
+
  
     ### LOOK AND FEEL ###
     general = {
@@ -244,7 +260,7 @@ in
     # Variables for keybinds
     "$mod" = "SUPER";
     "$terminal" = "kitty";
-    "$fileManager" = "dolphin";
+    "$fileManager" = "kitty -e yazi";
     "$menu" = "fuzzel";
 
     # Key binds
@@ -256,6 +272,7 @@ in
         "$mod, F, fullscreen"
         "$mod, V, togglefloating,"
         "$mod, S, exec, hyprshot -m region"
+        "$mod, Y, exec, kitty -e yazi"
       ]
 
     # Some insane Nix programming that iterates over workspace binds
@@ -284,6 +301,19 @@ in
 
   };
   
+
+  # Hyprpaper settings
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = "on";
+      splash = false;
+      preload = [ "/etc/nixos/wallpaper.png" ];
+      wallpaper = [ ",/etc/nixos/wallpaper.png" ];
+    };
+  };
+
+
   # Environment Variables
   home.sessionVariables = {
     HYPRSHOT_DIR = homeDirectory + "/Pictures/screenshots";
@@ -302,6 +332,11 @@ in
 
   # User packages
   home.packages = with pkgs; [
+    # Python
+    (pkgs.python3.withPackages (ps: with ps; [
+     pillow
+    ]))
+
     # Fonts
     atkinson-hyperlegible-next
 
@@ -313,9 +348,9 @@ in
     zip
     unzip
     ffmpeg
-    python3
     zola
     gource
+    yt-dlp
 
     # Godot build requirements
     scons
@@ -336,20 +371,22 @@ in
     dunst
     libnotify
     hyprshot
-    awww
     hyprshutdown
+    hyprpaper
 
     # QT applications
-    kdePackages.dolphin
     kdePackages.qt6ct
     vlc
     prismlauncher
     rimsort
     qbittorrent
     dolphin-emu
+    libreoffice-qt
+    qimgv 
 
     # GTK applications
     firefox
+    tor-browser
     remmina
     audacity
     inkscape
@@ -366,6 +403,7 @@ in
     itch
     blender
     renpy
+    pcsx2
 
     # Cardmaker Requirements
     mono
